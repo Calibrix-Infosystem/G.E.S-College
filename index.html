@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination Portal | G.E.S. College of Pharmacy</title>
+    <!-- Favicon link pointing to logo.ico -->
+    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #0d47a1;
+            --primary-light: #1e88e5;
+            --accent-color: #00e676;
+            --bg-gradient-start: #0a192f;
+            --bg-gradient-end: #112240;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            position: relative;
+            overflow-x: hidden;
+            color: var(--text-dark);
+        }
+
+        /* Background Animated Particles */
+        .bg-bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-bubbles li {
+            position: absolute;
+            list-style: none;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            bottom: -150px;
+            animation: square 20s infinite linear;
+            border-radius: 50%;
+        }
+
+        .bg-bubbles li:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-delay: 0s; }
+        .bg-bubbles li:nth-child(2) { left: 20%; width: 30px; height: 30px; animation-delay: 2s; animation-duration: 12s; }
+        .bg-bubbles li:nth-child(3) { left: 25%; width: 50px; height: 50px; animation-delay: 4s; }
+        .bg-bubbles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-duration: 18s; }
+        .bg-bubbles li:nth-child(5) { left: 70%; width: 40px; height: 40px; animation-delay: 0s; }
+        .bg-bubbles li:nth-child(6) { left: 80%; width: 120px; height: 120px; animation-delay: 3s; background: rgba(255, 255, 255, 0.03); }
+        .bg-bubbles li:nth-child(7) { left: 32%; width: 90px; height: 90px; animation-delay: 7s; }
+
+        @keyframes square {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Header Styling */
+        header {
+            position: relative;
+            z-index: 10;
+            background: rgba(13, 71, 161, 0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .college-info h1 {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .college-info p {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .portal-tag {
+            background: linear-gradient(135deg, #1e88e5, #00e676);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
+        }
+
+        /* Main Container */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            padding: 40px 20px;
+        }
+
+        .auth-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 440px;
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-toggle-btns {
+            display: flex;
+            background: #e2e8f0;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .toggle-btn.active {
+            color: #ffffff;
+            background: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.3);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .form-header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i.icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            outline: none;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary-light);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.1);
+        }
+
+        .input-group input:focus + i.icon {
+            color: var(--primary-light);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .forgot-pass {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-pass:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(13, 71, 161, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(13, 71, 161, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Loading Spinner Overlay */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: white;
+            color: var(--text-dark);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success { border-left: 5px solid #00e676; }
+        .toast.error { border-left: 5px solid #ff3d00; }
+
+        /* Footer Styling */
+        footer {
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 15px 20px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        footer p {
+            margin: 3px 0;
+        }
+
+        footer .dev-credit {
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        footer .brand-highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            .header-brand {
+                flex-direction: column;
+            }
+            .auth-container {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Animation -->
+    <ul class="bg-bubbles">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+
+    <!-- Header -->
+    <header>
+        <div class="header-brand">
+            <img src="logo.ico" alt="College Logo" class="header-logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+            <div class="college-info">
+                <h1>G.E.S. College Of Pharmacy (D.Pharm), Limb, Satara</h1>
+                <p>Powered By Pharma2tech Systems</p>
+            </div>
+        </div>
+        <div class="portal-tag">
+            <i class="fa-solid fa-graduation-cap"></i> Online Exam Portal
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="auth-container">
+            
+            <!-- Loading Indicator -->
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Processing, please wait...</div>
+            </div>
+
+            <!-- Form Toggle -->
+            <div class="form-toggle-btns">
+                <button class="toggle-btn active" onclick="switchForm('login')">Candidate Login</button>
+                <button class="toggle-btn" onclick="switchForm('register')">New Registration</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginSection" class="form-section active">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Enter your details to access examination portal</p>
+                </div>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope icon"></i>
+                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-pass" onclick="alert('Please contact Support@pharma2tech.in for password reset.')">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span>Login to Portal</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- REGISTRATION FORM -->
+            <div id="registerSection" class="form-section">
+                <div class="form-header">
+                    <h2>Candidate Registration</h2>
+                    <p>Register yourself for online examination</p>
+                </div>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user icon"></i>
+                        <input type="text" id="regFullName" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope icon"></i>
+                        <input type="email" id="regEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-phone icon"></i>
+                        <input type="tel" id="regMobile" placeholder="Mobile / WhatsApp Number" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-graduation-cap icon"></i>
+                        <select id="regYear" required>
+                            <option value="" disabled selected>Select Academic Year</option>
+                            <option value="First Year D.Pharm">First Year D.Pharm</option>
+                            <option value="Second Year D.Pharm">Second Year D.Pharm</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <input type="password" id="regPassword" placeholder="Create Password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span>Register Now</span>
+                        <i class="fa-solid fa-user-plus"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>G.E.S. College Of Pharmacy (D.Pharm), Limb, Satara &copy; 2026. All Rights Reserved.</p>
+        <p class="dev-credit">Designed & Developed by <span class="brand-highlight">Pharma2tech Systems</span> | Support: Support@pharma2tech.in</p>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-info" id="toastIcon"></i>
+        <span id="toastMessage">Notification message</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // CONFIGURATION: Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCpSJQEjQAQICDXFnO4J4NPK7q4r_XLlVmTdCJ2HiHouey6TdY_uge3yUmicd4n3ZhnQ/exec";
+
+        // Switch between Login and Registration Tabs
+        function switchForm(type) {
+            const loginSection = document.getElementById('loginSection');
+            const registerSection = document.getElementById('registerSection');
+            const btns = document.querySelectorAll('.toggle-btn');
+
+            if (type === 'login') {
+                loginSection.classList.add('active');
+                registerSection.classList.remove('active');
+                btns[0].classList.add('active');
+                btns[1].classList.remove('active');
+            } else {
+                registerSection.classList.add('active');
+                loginSection.classList.remove('active');
+                btns[1].classList.add('active');
+                btns[0].classList.remove('active');
+            }
+        }
+
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMessage.textContent = message;
+            toast.className = `toast ${type} show`;
+
+            if (type === 'success') {
+                toastIcon.className = "fa-solid fa-circle-check";
+                toastIcon.style.color = "#00e676";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-exclamation";
+                toastIcon.style.color = "#ff3d00";
+            }
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Toggle Loading Screen
+        function toggleLoading(show, text = 'Processing, please wait...') {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            loadingText.textContent = text;
+            if (show) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+
+        // Handle Candidate Registration
+        async function handleRegister(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('regFullName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const mobile = document.getElementById('regMobile').value.trim();
+            const year = document.getElementById('regYear').value;
+            const password = document.getElementById('regPassword').value;
+
+            toggleLoading(true, 'Registering Candidate & Sending Email...');
+
+            const payload = {
+                action: 'register',
+                fullName: fullName,
+                email: email,
+                mobile: mobile,
+                year: year,
+                password: password
+            };
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                toggleLoading(false);
+
+                if (result.status === 'success') {
+                    showToast('Registration Successful! Check email for details.', 'success');
+                    document.getElementById('registerForm').reset();
+                    switchForm('login');
+                } else {
+                    showToast(result.message || 'Registration failed.', 'error');
+                }
+            } catch (err) {
+                toggleLoading(false);
+                showToast('Registration failed or network error.', 'error');
+            }
+        }
+
+        // Handle Candidate Login
+        async function handleLogin(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            toggleLoading(true, 'Verifying Credentials...');
+
+            const payload = {
+                action: 'login',
+                email: email,
+                password: password
+            };
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                toggleLoading(false);
+
+                if (result.status === 'success') {
+                    showToast('Login Successful! Redirecting...', 'success');
+                    localStorage.setItem('candidateUser', JSON.stringify(result.user));
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    showToast(result.message || 'Invalid Credentials!', 'error');
+                }
+            } catch (err) {
+                toggleLoading(false);
+                showToast('Error connecting to authentication server.', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
